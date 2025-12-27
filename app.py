@@ -122,13 +122,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-st.title("� Nesli Tükenen Hayvanlar Veri Analizi")
+st.title("Nesli Tükenen Hayvanlar Veri Analizi")
 
 st.markdown("""
 <div style='background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); 
             padding: 25px; border-radius: 15px; color: white; text-align: center; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 30px;'>
-    <h3 style='color: white; margin: 0;'>🌍 Dünya Üzerindeki Nesli Tükenme Tehlikesi Altında Olan Hayvanlar</h3>
+    <h3 style='color: white; margin: 0;'>Dünya Üzerindeki Nesli Tükenme Tehlikesi Altında Olan Hayvanlar</h3>
     <p style='margin: 10px 0 0 0; font-size: 16px;'>
         Koruma statüleri, popülasyon verileri ve tehdit seviyeleri ile kapsamlı analiz
     </p>
@@ -149,55 +149,18 @@ def load_default_data():
             return None, False
 
 
+# Varsayılan veriyi yükle
 df, default_loaded = load_default_data()
 
-
+# Sidebar'da bilgi
 with st.sidebar:
-    st.header("⚙️ Ayarlar")
+    st.header("Ayarlar")
     
     if default_loaded:
         st.success("✅ Veri seti yüklendi")
-        st.caption(f"🐾 {len(df)} Hayvan Türü")
-    
-    st.markdown("---")
-    st.subheader("🔄 Farklı Veri Yükle")
-    
-    change_data = st.checkbox("Farklı bir veri seti kullanmak istiyorum")
-    
-    if change_data:
-        loading_method = st.radio(
-            "Yükleme yöntemi:",
-            ["💻 Dosya Yükle", "🔗 URL Gir"],
-            label_visibility="collapsed"
-        )
-        
-        if loading_method == "💻 Dosya Yükle":
-            uploaded_file = st.file_uploader("CSV dosyanızı yükleyin", type=["csv"])
-            
-            if uploaded_file is not None:
-                @st.cache_data
-                def load_data(file):
-                    return pd.read_csv(file)
-                
-                df = load_data(uploaded_file)
-                st.success("✅ Dosya yüklendi!")
-
-        else:  
-            url_input = st.text_input(
-                "CSV URL'sini girin:",
-                placeholder="https://raw.githubusercontent.com/..."
-            )
-            
-            if url_input:
-                try:
-                    @st.cache_data
-                    def load_data_from_url(url):
-                        return pd.read_csv(url)
-                    
-                    df = load_data_from_url(url_input)
-                    st.success("✅ URL'den yüklendi!")
-                except Exception as e:
-                    st.error(f"❌ Hata: {str(e)}")
+        st.caption(f"Toplam {len(df)} Hayvan Türü")
+    else:
+        st.error("❌ Veri seti yüklenemedi")
 
 if df is not None:
     
@@ -368,7 +331,7 @@ if df is not None:
     numeric_features = df.select_dtypes(include=["int64", "float64"]).columns.tolist()
     
     if len(numeric_features) > 0:
-        st.header("6. 🔗 Sayısal Özellikler ve Korelasyon Analizi")
+        st.header("6. Sayısal Özellikler ve Korelasyon Analizi")
         
         with st.expander("🔢 Tespit Edilen Sayısal Özellikler", expanded=False):
             cols = st.columns(min(len(numeric_features), 4))
@@ -649,7 +612,7 @@ if df is not None:
             
             
             if len(numeric_features) <= 6 and len(numeric_features) >= 2:
-                st.header("10. 🔀 Sayısal Özelliklerin Dağılım Grafikleri (Pair Plot)")
+                st.header("10. Sayısal Özelliklerin Dağılım Grafikleri (Pair Plot)")
                 
                 st.markdown("""
                 <div style='background: #d1ecf1; padding: 15px; border-radius: 10px; border-left: 5px solid #17a2b8;'>
@@ -694,9 +657,9 @@ if df is not None:
     <div style='text-align: center; padding: 30px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
                 border-radius: 15px; margin-top: 50px;'>
         <p style='color: white; margin: 0; font-size: 14px;'>
-            🐾 <b>Nesli Tükenen Hayvanlar Veri Analizi</b><br>
+            <b>Nesli Tükenen Hayvanlar Veri Analizi</b><br>
             Dünya Üzerindeki Koruma Statüleri ve Popülasyon Verileri<br>
-            🌍 Doğayı Koruyalım
+            Doğayı Koruyalım
         </p>
     </div>
     """, unsafe_allow_html=True)
