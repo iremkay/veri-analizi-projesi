@@ -121,29 +121,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
-# ==============================
-# Hayvan Fotoğrafları Galerisi
-# ==============================
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    st.image("https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=400", 
-             caption="Panda", use_column_width=True)
-
-with col2:
-    st.image("https://images.unsplash.com/photo-1612902377756-414b2139d5e2?w=400", 
-             caption="Kaplan", use_column_width=True)
-
-with col3:
-    st.image("https://images.unsplash.com/photo-1551927336-51d86795837f?w=400", 
-             caption="Gorilla", use_column_width=True)
-
-with col4:
-    st.image("https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=400", 
-             caption="Orangutan", use_column_width=True)
-
-st.title("Nesli Tükenen Hayvanlar Veri Analizi")
+st.title("🐼 Nesli Tükenen Hayvanlar Veri Analizi")
 
 st.markdown("""
 <div style='background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); 
@@ -182,20 +160,6 @@ with st.sidebar:
         st.caption(f"Toplam {len(df)} Hayvan Türü")
     else:
         st.error("❌ Veri seti yüklenemedi")
-    
-    st.markdown("---")
-    
-    # Sidebar'da hayvan fotoğrafları
-    st.subheader("🐾 Örnek Türler")
-    
-    st.image("https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=300", 
-             caption="Amur Leopard", use_column_width=True)
-    
-    st.image("https://images.unsplash.com/photo-1551316679-9c6ae9dec224?w=300", 
-             caption="Polar Bear", use_column_width=True)
-    
-    st.image("https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=300", 
-             caption="Sumatran Elephant", use_column_width=True)
 
 if df is not None:
     
