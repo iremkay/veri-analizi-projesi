@@ -1,8 +1,26 @@
-# 📊 Keşifsel Veri Analizi (EDA) Streamlit Uygulaması
+# � Nesli Tükenen Hayvanlar Veri Analizi
 
-Bu proje, **Streamlit tabanlı bir Keşifsel Veri Analizi (EDA) uygulamasıdır** ve **Veri Bilimi ve Makine Öğrenmesi** dersleri için eğitim amaçlı tasarlanmıştır.
+Bu proje, **Streamlit tabanlı bir veri analizi uygulamasıdır** ve dünya üzerindeki **nesli tükenme tehlikesi altında olan hayvanları** inceler.
 
-Uygulama, ham veri incelemesinden korelasyon analizi, standartlaştırma ve **Temel Bileşen Analizi (PCA)** gibi işlemlere kadar kapsamlı bir yol haritası sunar.
+Uygulama, koruma statüleri, popülasyon verileri, tehdit seviyeleri ve habitat bilgileri üzerinden kapsamlı analizler sunar.
+
+---
+
+## 🌍 Veri Seti Hakkında
+
+Veri seti **45 farklı nesli tükenmekte olan hayvan türü** içermektedir:
+
+### Özellikler:
+- **animal_name:** Hayvan adı
+- **scientific_name:** Bilimsel adı
+- **conservation_status:** Koruma statüsü (Critically Endangered, Endangered, Vulnerable)
+- **population:** Tahmini popülasyon
+- **habitat:** Yaşam alanı
+- **continent:** Kıta
+- **threat_level:** Tehdit seviyesi (1-10)
+- **body_weight_kg:** Ortalama vücut ağırlığı (kg)
+- **lifespan_years:** Ortalama yaşam süresi (yıl)
+- **diet_type:** Beslenme türü
 
 ---
 
@@ -60,10 +78,10 @@ Python 3.8 veya üzeri versiyonun yüklü olması gerekmektedir.
 
 ### Adımlar
 
-1. **Repoyu klonlayın veya dosyaları indirin:**
+1. **Repoyu klonlayın:**
    ```bash
-   git clone <repo-url>
-   cd proje.streamlit
+   git clone https://github.com/iremkay/veri-analizi-projesi.git
+   cd veri-analizi-projesi
    ```
 
 2. **Gerekli paketleri yükleyin:**
@@ -84,12 +102,12 @@ Python 3.8 veya üzeri versiyonun yüklü olması gerekmektedir.
 ## 📁 Proje Yapısı
 
 ```
-proje.streamlit/
+veri-analizi-projesi/
 │
-├── app.py                 # Ana Streamlit uygulaması
-├── requirements.txt       # Python bağımlılıkları
-├── ornek_veri.csv        # Örnek veri seti (test için)
-└── README.md             # Proje dokümantasyonu
+├── app.py                      # Ana Streamlit uygulaması
+├── requirements.txt            # Python bağımlılıkları
+├── endangered_animals.csv      # Nesli tükenen hayvanlar veri seti
+└── README.md                   # Proje dokümantasyonu
 ```
 
 ---
@@ -97,11 +115,12 @@ proje.streamlit/
 ## 🎯 Kullanım
 
 1. Uygulamayı çalıştırın
-2. **CSV dosyanızı yükleyin** (veya `ornek_veri.csv` dosyasını kullanın)
+2. Veri seti otomatik olarak yüklenir
 3. Otomatik olarak gerçekleştirilen analizleri inceleyin:
-   - Veri seti özeti
-   - İstatistiksel bilgiler
-   - Görselleştirmeler
+   - Koruma statüsü dağılımı
+   - Popülasyon istatistikleri
+   - Tehdit seviyesi analizleri
+   - Habitat ve kıta dağılımları
    - Korelasyon analizi
    - PCA sonuçları
 
@@ -109,10 +128,10 @@ proje.streamlit/
 
 ## 📊 Örnek Veri Seti
 
-Proje, test amaçlı bir örnek veri seti (`ornek_veri.csv`) içermektedir:
-- **30 satır** çalışan verisi
-- **7 sütun:** isim, yaş, şehir, maaş, deneyim yılı, eğitim seviyesi, performans skoru
-- Hem sayısal hem de kategorik özellikler
+Proje, **45 nesli tükenmekte olan hayvan türünü** içeren gerçek verilere dayalı bir veri seti kullanmaktadır:
+- **Critically Endangered** (Kritik Derecede Tehlike Altında): Amur Leopard, Javan Rhino, Vaquita
+- **Endangered** (Tehlike Altında): Mountain Gorilla, Bengal Tiger, Red Panda  
+- **Vulnerable** (Hassas): Giant Panda, Polar Bear, Snow Leopard
 
 ---
 
@@ -127,10 +146,9 @@ Proje, test amaçlı bir örnek veri seti (`ornek_veri.csv`) içermektedir:
 
 ## 📝 Notlar
 
-- CSV dosyanız **ilk satırda sütun başlıkları** içermelidir
-- Veriler **virgül (,)** ile ayrılmalıdır
-- Hem sayısal hem de kategorik veriler desteklenir
-- Büyük veri setleri için önizleme satır sayısını ayarlayabilirsiniz
+- Veri seti otomatik olarak GitHub'dan yüklenir
+- Sidebar'dan farklı veri setleri de yüklenebilir
+- Tüm analizler interaktif ve gerçek zamanlıdır
 
 ---
 
@@ -142,4 +160,4 @@ Sorularınız veya geri bildirimleriniz için lütfen iletişime geçin.
 
 ## 📄 Lisans
 
-Bu proje eğitim amaçlı geliştirilmiştir ve serbestçe kullanılabilir.
+Bu proje eğitim amaçlı geliştirilmiştir.

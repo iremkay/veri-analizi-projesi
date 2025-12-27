@@ -1,0 +1,46 @@
+animal_name,scientific_name,conservation_status,population,habitat,continent,threat_level,body_weight_kg,lifespan_years,diet_type
+Amur Leopard,Panthera pardus orientalis,Critically Endangered,84,Temperate Forests,Asia,10,50,15,Carnivore
+Javan Rhino,Rhinoceros sondaicus,Critically Endangered,72,Tropical Forests,Asia,10,2300,40,Herbivore
+Vaquita,Phocoena sinus,Critically Endangered,10,Marine,North America,10,55,21,Carnivore
+Mountain Gorilla,Gorilla beringei beringei,Endangered,1063,Mountain Forests,Africa,9,220,40,Herbivore
+Sumatran Elephant,Elephas maximus sumatranus,Critically Endangered,2400,Tropical Forests,Asia,10,4000,70,Herbivore
+Hawksbill Turtle,Eretmochelys imbricata,Critically Endangered,8000,Marine,Global,10,80,50,Omnivore
+Saola,Pseudoryx nghetinhensis,Critically Endangered,750,Mountain Forests,Asia,10,90,15,Herbivore
+South China Tiger,Panthera tigris amoyensis,Critically Endangered,0,Forests,Asia,10,150,18,Carnivore
+Black Rhino,Diceros bicornis,Critically Endangered,5630,Grasslands,Africa,10,1400,45,Herbivore
+Sumatran Orangutan,Pongo abelii,Critically Endangered,14613,Tropical Forests,Asia,10,85,45,Herbivore
+Atlantic Bluefin Tuna,Thunnus thynnus,Endangered,Unknown,Marine,Global,8,680,40,Carnivore
+Giant Panda,Ailuropoda melanoleuca,Vulnerable,1864,Bamboo Forests,Asia,6,120,20,Herbivore
+Polar Bear,Ursus maritimus,Vulnerable,26000,Arctic,Arctic,7,450,25,Carnivore
+Snow Leopard,Panthera uncia,Vulnerable,4080,Mountain Ranges,Asia,7,55,15,Carnivore
+Bengal Tiger,Panthera tigris tigris,Endangered,2500,Forests,Asia,9,260,18,Carnivore
+Blue Whale,Balaenoptera musculus,Endangered,25000,Marine,Global,8,200000,90,Carnivore
+African Wild Dog,Lycaon pictus,Endangered,6600,Savannas,Africa,9,30,11,Carnivore
+Asian Elephant,Elephas maximus,Endangered,40000,Forests,Asia,9,5400,70,Herbivore
+Bornean Orangutan,Pongo pygmaeus,Critically Endangered,104700,Tropical Forests,Asia,10,80,45,Herbivore
+Chimpanzee,Pan troglodytes,Endangered,300000,Forests,Africa,9,55,50,Omnivore
+Green Sea Turtle,Chelonia mydas,Endangered,Unknown,Marine,Global,8,200,80,Herbivore
+Red Panda,Ailurus fulgens,Endangered,10000,Mountain Forests,Asia,8,6,15,Herbivore
+Galápagos Penguin,Spheniscus mendiculus,Endangered,1200,Marine,South America,9,2,20,Carnivore
+Kakapo,Strigops habroptilus,Critically Endangered,252,Forests,Oceania,10,4,60,Herbivore
+Philippine Eagle,Pithecophaga jefferyi,Critically Endangered,400,Tropical Forests,Asia,10,7,60,Carnivore
+Yangtze Finless Porpoise,Neophocaena asiaeorientalis,Critically Endangered,1040,Freshwater,Asia,10,72,24,Carnivore
+Ethiopian Wolf,Canis simensis,Endangered,500,Mountains,Africa,9,16,10,Carnivore
+Iberian Lynx,Lynx pardinus,Endangered,1668,Forests,Europe,9,13,14,Carnivore
+Malayan Tiger,Panthera tigris jacksoni,Critically Endangered,150,Tropical Forests,Asia,10,120,18,Carnivore
+Sunda Tiger,Panthera tigris sondaica,Critically Endangered,400,Tropical Forests,Asia,10,140,18,Carnivore
+Indochinese Tiger,Panthera tigris corbetti,Endangered,350,Forests,Asia,9,195,18,Carnivore
+Cross River Gorilla,Gorilla gorilla diehli,Critically Endangered,300,Forests,Africa,10,180,40,Herbivore
+Western Lowland Gorilla,Gorilla gorilla gorilla,Critically Endangered,100000,Forests,Africa,10,160,40,Herbivore
+Pygmy Three-toed Sloth,Bradypus pygmaeus,Critically Endangered,79,Mangrove Forests,South America,10,3,30,Herbivore
+Gharial,Gavialis gangeticus,Critically Endangered,650,Rivers,Asia,10,250,40,Carnivore
+California Condor,Gymnogyps californianus,Critically Endangered,537,Mountains,North America,10,10,60,Carnivore
+Tasmanian Devil,Sarcophilus harrisii,Endangered,25000,Forests,Oceania,8,9,6,Carnivore
+Goliath Frog,Conraua goliath,Endangered,Unknown,Rivers,Africa,8,3,15,Carnivore
+Proboscis Monkey,Nasalis larvatus,Endangered,7000,Mangrove Forests,Asia,9,24,20,Herbivore
+Golden Lion Tamarin,Leontopithecus rosalia,Endangered,3200,Forests,South America,9,0.6,15,Omnivore
+Axolotl,Ambystoma mexicanum,Critically Endangered,1000,Lakes,North America,10,0.2,15,Carnivore
+Dhole,Cuon alpinus,Endangered,2500,Forests,Asia,9,20,16,Carnivore
+Bonobo,Pan paniscus,Endangered,15000,Forests,Africa,9,45,50,Omnivore
+Orangutan,Pongo spp,Critically Endangered,120000,Tropical Forests,Asia,10,82,45,Herbivore
+Leatherback Sea Turtle,Dermochelys coriacea,Vulnerable,34000,Marine,Global,7,700,50,Carnivore

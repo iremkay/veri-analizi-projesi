@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Veri Analizi Streamlit Uygulaması
-Keşifsel Veri Analizi (EDA) için tasarlanmıştır
-"""
+
 
 import streamlit as st
 import pandas as pd
@@ -13,19 +10,15 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
 
-# ==============================
-# Uygulama Yapılandırması
-# ==============================
+
 st.set_page_config(
-    page_title="Veri Analizi Uygulaması",
+    page_title="Nesli Tükenen Hayvanlar Analizi",
     layout="wide",
     initial_sidebar_state="expanded",
-    page_icon="📊"
+    page_icon="🐾"
 )
 
-# ==============================
-# Özel CSS Stilleri
-# ==============================
+
 st.markdown("""
     <style>
     /* Ana sayfa arka planı */
@@ -128,48 +121,43 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ==============================
-# Başlık ve Açıklama
-# ==============================
-st.title("📊 Keşifsel Veri Analizi Platformu")
+
+st.title("� Nesli Tükenen Hayvanlar Veri Analizi")
 
 st.markdown("""
-<div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+<div style='background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); 
             padding: 25px; border-radius: 15px; color: white; text-align: center; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 30px;'>
-    <h3 style='color: white; margin: 0;'>🚀 Veri Setlerinizi Analiz Edin</h3>
+    <h3 style='color: white; margin: 0;'>🌍 Dünya Üzerindeki Nesli Tükenme Tehlikesi Altında Olan Hayvanlar</h3>
     <p style='margin: 10px 0 0 0; font-size: 16px;'>
-        Profesyonel veri analizi araçları ile verilerinizi keşfedin, görselleştirin ve içgörüler elde edin.
+        Koruma statüleri, popülasyon verileri ve tehdit seviyeleri ile kapsamlı analiz
     </p>
 </div>
 """, unsafe_allow_html=True)
 
-# ==============================
-# Varsayılan Veri Seti Yükleme
-# ==============================
+
 @st.cache_data
 def load_default_data():
     """Varsayılan veri setini GitHub'dan yükler"""
-    default_url = "https://raw.githubusercontent.com/iremkay/veri-analizi-projesi/main/ornek_veri.csv"
+    default_url = "https://raw.githubusercontent.com/iremkay/veri-analizi-projesi/main/endangered_animals.csv"
     try:
         return pd.read_csv(default_url), True
     except:
-        # Eğer GitHub'dan yüklenemezse, yerel örnek veri kullan
         try:
-            return pd.read_csv("ornek_veri.csv"), True
+            return pd.read_csv("endangered_animals.csv"), True
         except:
             return None, False
 
-# Varsayılan veriyi yükle
+
 df, default_loaded = load_default_data()
 
-# Sidebar'da veri değiştirme seçeneği
+
 with st.sidebar:
     st.header("⚙️ Ayarlar")
     
     if default_loaded:
-        st.success("✅ Varsayılan veri seti yüklendi")
-        st.caption("Çalışan Veri Seti (30 kayıt)")
+        st.success("✅ Veri seti yüklendi")
+        st.caption(f"🐾 {len(df)} Hayvan Türü")
     
     st.markdown("---")
     st.subheader("🔄 Farklı Veri Yükle")
@@ -194,7 +182,7 @@ with st.sidebar:
                 df = load_data(uploaded_file)
                 st.success("✅ Dosya yüklendi!")
 
-        else:  # URL
+        else:  
             url_input = st.text_input(
                 "CSV URL'sini girin:",
                 placeholder="https://raw.githubusercontent.com/..."
@@ -213,12 +201,10 @@ with st.sidebar:
 
 if df is not None:
     
-    # ==============================
-    # Veri Seti Genel Bakış
-    # ==============================
+    
     st.header("1. 📈 Veri Seti Genel Bakış")
     
-    # Metrik kartları
+    
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
@@ -254,7 +240,7 @@ if df is not None:
     
     st.markdown("---")
     
-    # Sütun isimleri expander içinde
+   
     with st.expander("📝 Sütun İsimleri ve Tipleri"):
         col_info = pd.DataFrame({
             'Sütun Adı': df.columns,
@@ -264,9 +250,7 @@ if df is not None:
         })
         st.dataframe(col_info, use_container_width=True, height=300)
     
-    # ==============================
-    # Ham Veri Önizleme
-    # ==============================
+   
     st.header("2. 🔍 Ham Veri Önizleme")
     
     col1, col2 = st.columns([3, 1])
@@ -294,9 +278,7 @@ if df is not None:
     else:
         st.dataframe(df.sample(min(rows_to_show, len(df))), use_container_width=True, height=400)
     
-    # ==============================
-    # İstatistiksel Özet
-    # ==============================
+    
     st.header("3. 📊 İstatistiksel Özet")
     
     tab1, tab2 = st.tabs(["📈 Sayısal Özellikler", "📝 Tüm Özellikler"])
@@ -319,9 +301,7 @@ if df is not None:
         describe_all = df.describe(include="all")
         st.dataframe(describe_all, use_container_width=True, height=350)
     
-    # ==============================
-    # Veri Tipleri İncelemesi
-    # ==============================
+    
     st.header("4. 🏷️ Veri Tipleri ve Detaylar")
     
     dtypes_df = pd.DataFrame({
@@ -339,9 +319,7 @@ if df is not None:
         height=350
     )
     
-    # ==============================
-    # Eksik Değer Kontrolü
-    # ==============================
+   
     st.header("5. ⚠️ Eksik Değer Analizi")
     
     total_missing = df.isnull().sum().sum()
@@ -380,17 +358,13 @@ if df is not None:
                 st.pyplot(fig)
                 plt.close()
     
-    # ==============================
-    # Alt Bilgi
-    # ==============================
+    
     st.markdown("---")
     st.caption(
         "Bu uygulama, Veri Bilimi ve Makine Öğrenmesi dersleri için eğitim amaçlı tasarlanmıştır."
     )
     
-    # ==============================
-    # Sayısal Özellik Tespiti
-    # ==============================
+   
     numeric_features = df.select_dtypes(include=["int64", "float64"]).columns.tolist()
     
     if len(numeric_features) > 0:
@@ -408,16 +382,12 @@ if df is not None:
                     </div>
                     """, unsafe_allow_html=True)
         
-        # ==============================
-        # Korelasyon Matrisi
-        # ==============================
+      
         st.subheader("🔥 Korelasyon Isı Haritası")
         
         corr_matrix = df[numeric_features].corr()
         
-        # ==============================
-        # Isı Haritası Görselleştirmesi
-        # ==============================
+       
         fig, ax = plt.subplots(figsize=(12, 10))
         
         mask = np.triu(np.ones_like(corr_matrix, dtype=bool), k=1)
@@ -442,7 +412,7 @@ if df is not None:
         st.pyplot(fig)
         plt.close()
         
-        # En yüksek korelasyonları göster
+        
         with st.expander("🔍 En Yüksek Korelasyonlar", expanded=False):
             corr_pairs = corr_matrix.unstack()
             corr_pairs = corr_pairs[corr_pairs < 1.0].abs().sort_values(ascending=False)
@@ -451,9 +421,7 @@ if df is not None:
             for idx, (pair, value) in enumerate(top_corr.items(), 1):
                 st.markdown(f"**{idx}.** `{pair[0]}` ↔ `{pair[1]}`: **{value:.3f}**")
         
-        # ==============================
-        # Sayısal Özelliklerin Standartlaştırılması
-        # ==============================
+       
         st.header("7. ⚖️ Sayısal Özelliklerin Standartlaştırılması")
         
         st.markdown("""
@@ -472,7 +440,7 @@ if df is not None:
         
         st.markdown("")
         
-        # Tespit edilen sayısal özellikleri kullan
+        
         scaler = StandardScaler()
         
         standardized_values = scaler.fit_transform(df[numeric_features])
@@ -482,7 +450,7 @@ if df is not None:
             columns=numeric_features
         )
         
-        # Karşılaştırma görünümü
+        
         comparison_option = st.radio(
             "Görüntüleme Modu:",
             ["Standartlaştırılmış Veri", "Orijinal vs Standartlaştırılmış Karşılaştırma"],
@@ -508,9 +476,7 @@ if df is not None:
                 st.markdown("**⚖️ Standartlaştırılmış Veri**")
                 st.dataframe(df_standardized.head(rows_to_show_std), use_container_width=True, height=350)
         
-        # ==============================
-        # Standartlaştırılmış Veri Üzerinde PCA
-        # ==============================
+     
         if len(numeric_features) >= 2:
             st.header("8. 🎯 Temel Bileşen Analizi (PCA)")
             
@@ -530,7 +496,6 @@ if df is not None:
             
             st.markdown("")
             
-            # PCA uygula
             pca = PCA(n_components=2)
             pca_components = pca.fit_transform(df_standardized)
             
@@ -539,7 +504,7 @@ if df is not None:
                 columns=["PC1", "PC2"]
             )
             
-            # Açıklanan varyans
+           
             explained_variance = pca.explained_variance_ratio_
             
             col1, col2, col3 = st.columns(3)
@@ -567,9 +532,7 @@ if df is not None:
             
             st.markdown("---")
             
-            # ==============================
-            # PCA Scatter Plot
-            # ==============================
+            
             st.subheader("🟣 PCA Dağılım Grafiği (PC1 vs PC2)")
             
             fig, ax = plt.subplots(figsize=(10, 7))
@@ -600,9 +563,7 @@ if df is not None:
             st.pyplot(fig)
             plt.close()
             
-            # ==============================
-            # Kutu Grafikleri (Box Plots)
-            # ==============================
+            
             st.header("9. 📦 Sayısal Özelliklerin Kutu Grafikleri ve Aykırı Değer Analizi")
             
             st.markdown("""
@@ -615,7 +576,7 @@ if df is not None:
             
             st.markdown("")
             
-            # Sütun seçimi
+            
             selected_features = st.multiselect(
                 "Görselleştirmek istediğiniz özellikleri seçin:",
                 numeric_features,
@@ -623,7 +584,7 @@ if df is not None:
             )
             
             if selected_features:
-                # Her sayısal özellik için ayrı kutu grafiği
+                
                 num_cols = min(2, len(selected_features))
                 num_rows = (len(selected_features) + num_cols - 1) // num_cols
                 
@@ -656,7 +617,7 @@ if df is not None:
                         axes[idx].grid(axis='y', alpha=0.3, linestyle='--')
                         axes[idx].set_facecolor('#f8f9fa')
                 
-                # Boş grafikleri gizle
+               
                 for idx in range(len(selected_features), len(axes)):
                     axes[idx].axis('off')
                 
@@ -664,7 +625,7 @@ if df is not None:
                 st.pyplot(fig)
                 plt.close()
                 
-                # Aykırı değer istatistikleri
+                
                 with st.expander("📊 Aykırı Değer İstatistikleri", expanded=False):
                     outlier_stats = []
                     for feature in selected_features:
@@ -686,9 +647,7 @@ if df is not None:
             else:
                 st.info("👆 Lütfen en az bir özellik seçin.")
             
-            # ==============================
-            # Dağılım Grafikleri (Pair Plot)
-            # ==============================
+            
             if len(numeric_features) <= 6 and len(numeric_features) >= 2:
                 st.header("10. 🔀 Sayısal Özelliklerin Dağılım Grafikleri (Pair Plot)")
                 
@@ -732,17 +691,16 @@ if df is not None:
     # ==============================
     st.markdown("---")
     st.markdown("""
-    <div style='text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    <div style='text-align: center; padding: 30px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
                 border-radius: 15px; margin-top: 50px;'>
         <p style='color: white; margin: 0; font-size: 14px;'>
-            💻 <b>Keşifsel Veri Analizi Platformu</b><br>
-            Veri Bilimi ve Makine Öğrenmesi dersleri için eğitim amaçlı tasarlanmıştır.<br>
-            📊 Powered by Streamlit & Python
+            🐾 <b>Nesli Tükenen Hayvanlar Veri Analizi</b><br>
+            Dünya Üzerindeki Koruma Statüleri ve Popülasyon Verileri<br>
+            🌍 Doğayı Koruyalım
         </p>
     </div>
     """, unsafe_allow_html=True)
 
 else:
-    st.error("❌ Varsayılan veri seti yüklenemedi. Lütfen sidebar'dan bir veri seti yükleyin.")
-    
+    st.error("❌ Veri seti yüklenemedi. Lütfen sidebar'dan farklı bir veri seti yükleyin.")
     st.info("💡 Sidebar'dan (sol menü) farklı bir veri seti yükleyebilirsiniz.")
