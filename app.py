@@ -145,49 +145,71 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==============================
-# Veri Seti Yükleme
+# Varsayılan Veri Seti Yükleme
 # ==============================
-st.header("📁 Veri Seti Yükleme")
-
-# Yükleme yöntemi seçimi
-loading_method = st.radio(
-    "Veri yükleme yöntemini seçin:",
-    ["💻 Bilgisayardan Dosya Yükle", "🔗 GitHub/URL Linki ile Yükle"],
-    horizontal=True
-)
-
-df = None
-
-if loading_method == "💻 Bilgisayardan Dosya Yükle":
-    uploaded_file = st.file_uploader("CSV dosyanızı yükleyin", type=["csv"])
-    
-    if uploaded_file is not None:
-        @st.cache_data
-        def load_data(file):
-            return pd.read_csv(file)
-        
-        df = load_data(uploaded_file)
-
-else:  # GitHub/URL Linki
-    st.info("💡 **İpucu:** GitHub'dan CSV yüklemek için dosyanın 'raw' linkini kullanın.\n\nÖrnek: `https://raw.githubusercontent.com/kullanici/repo/main/dosya.csv`")
-    
-    url_input = st.text_input(
-        "CSV dosyasının URL'sini girin:",
-        placeholder="https://raw.githubusercontent.com/kullanici/repo/main/dosya.csv"
-    )
-    
-    if url_input:
+@st.cache_data
+def load_default_data():
+    """Varsayılan veri setini GitHub'dan yükler"""
+    default_url = "https://raw.githubusercontent.com/iremkay/veri-analizi-projesi/main/ornek_veri.csv"
+    try:
+        return pd.read_csv(default_url), True
+    except:
+        # Eğer GitHub'dan yüklenemezse, yerel örnek veri kullan
         try:
-            @st.cache_data
-            def load_data_from_url(url):
-                return pd.read_csv(url)
+            return pd.read_csv("ornek_veri.csv"), True
+        except:
+            return None, False
+
+# Varsayılan veriyi yükle
+df, default_loaded = load_default_data()
+
+# Sidebar'da veri değiştirme seçeneği
+with st.sidebar:
+    st.header("⚙️ Ayarlar")
+    
+    if default_loaded:
+        st.success("✅ Varsayılan veri seti yüklendi")
+        st.caption("Çalışan Veri Seti (30 kayıt)")
+    
+    st.markdown("---")
+    st.subheader("🔄 Farklı Veri Yükle")
+    
+    change_data = st.checkbox("Farklı bir veri seti kullanmak istiyorum")
+    
+    if change_data:
+        loading_method = st.radio(
+            "Yükleme yöntemi:",
+            ["💻 Dosya Yükle", "🔗 URL Gir"],
+            label_visibility="collapsed"
+        )
+        
+        if loading_method == "💻 Dosya Yükle":
+            uploaded_file = st.file_uploader("CSV dosyanızı yükleyin", type=["csv"])
             
-            with st.spinner('Veri yükleniyor...'):
-                df = load_data_from_url(url_input)
-                st.success("✅ Veri başarıyla yüklendi!")
-        except Exception as e:
-            st.error(f"❌ Veri yüklenirken hata oluştu: {str(e)}")
-            st.info("Lütfen URL'nin doğru olduğundan ve dosyanın CSV formatında olduğundan emin olun.")
+            if uploaded_file is not None:
+                @st.cache_data
+                def load_data(file):
+                    return pd.read_csv(file)
+                
+                df = load_data(uploaded_file)
+                st.success("✅ Dosya yüklendi!")
+
+        else:  # URL
+            url_input = st.text_input(
+                "CSV URL'sini girin:",
+                placeholder="https://raw.githubusercontent.com/..."
+            )
+            
+            if url_input:
+                try:
+                    @st.cache_data
+                    def load_data_from_url(url):
+                        return pd.read_csv(url)
+                    
+                    df = load_data_from_url(url_input)
+                    st.success("✅ URL'den yüklendi!")
+                except Exception as e:
+                    st.error(f"❌ Hata: {str(e)}")
 
 if df is not None:
     
@@ -721,74 +743,6 @@ if df is not None:
     """, unsafe_allow_html=True)
 
 else:
-    st.info("👆 Lütfen analiz etmek için bir CSV dosyası yükleyin veya GitHub linki girin.")
+    st.error("❌ Varsayılan veri seti yüklenemedi. Lütfen sidebar'dan bir veri seti yükleyin.")
     
-    st.markdown("---")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div style='background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>
-            <h3 style='color: #667eea; margin-top: 0;'>📋 Örnek Veri Seti Formatı</h3>
-            <p style='color: #555;'>CSV dosyanız şu formatta olmalıdır:</p>
-            <ul style='color: #555;'>
-                <li>İlk satır sütun başlıklarını içermeli</li>
-                <li>Veriler virgül (,) ile ayrılmalı</li>
-                <li>Hem sayısal hem de kategorik veriler olabilir</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.code("""isim,yas,sehir,maas
-Ali,25,Istanbul,5000
-Ayse,30,Ankara,6000
-Mehmet,35,Izmir,7000""", language="csv")
-    
-    with col2:
-        st.markdown("""
-        <div style='background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>
-            <h3 style='color: #764ba2; margin-top: 0;'>🔗 GitHub Örnek Link</h3>
-            <p style='color: #555;'>GitHub'dan CSV dosyası yüklemek için <b>raw</b> linkini kullanın:</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.code("https://raw.githubusercontent.com/elifkrtl/pets/main/pet_adoption_dataset.csv", language="text")
-        st.info("💡 Yukarıdaki linki kopyalayıp GitHub/URL seçeneğine yapıştırarak test edebilirsiniz.")
-    
-    # Özellikler listesi
-    st.markdown("---")
-    st.markdown("""
-    <div style='text-align: center; margin: 40px 0;'>
-        <h2 style='color: #34495e;'>✨ Platform Özellikleri</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    padding: 20px; border-radius: 12px; color: white; text-align: center;'>
-            <h3 style='color: white; margin-top: 0;'>📊 Veri Analizi</h3>
-            <p>İstatistiksel özetler, eksik değer analizi ve veri tipleri incelemesi</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                    padding: 20px; border-radius: 12px; color: white; text-align: center;'>
-            <h3 style='color: white; margin-top: 0;'>📈 Görselleştirme</h3>
-            <p>Korelasyon ısı haritaları, kutu grafikleri ve dağılım grafikleri</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-                    padding: 20px; border-radius: 12px; color: white; text-align: center;'>
-            <h3 style='color: white; margin-top: 0;'>🎯 PCA Analizi</h3>
-            <p>Boyut indirgeme ve temel bileşen analizi görselleştirmeleri</p>
-        </div>
-        """, unsafe_allow_html=True)
+    st.info("💡 Sidebar'dan (sol menü) farklı bir veri seti yükleyebilirsiniz.")
