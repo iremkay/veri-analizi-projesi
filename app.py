@@ -21,25 +21,25 @@ st.set_page_config(
 
 st.markdown("""
     <style>
-    /* Ana sayfa arka planı */
+    
     .main {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         background-attachment: fixed;
     }
     
-    /* Kart stil */
+   
     .stApp {
         background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
     }
     
-    /* Metrik kartları */
+    
     [data-testid="stMetricValue"] {
         font-size: 28px;
         color: #1f77b4;
         font-weight: 600;
     }
     
-    /* Başlıklar */
+    
     h1 {
         color: #2c3e50;
         font-weight: 700;
@@ -64,14 +64,14 @@ st.markdown("""
         font-weight: 500;
     }
     
-    /* Dataframe stili */
+    
     .dataframe {
         border: 2px solid #667eea !important;
         border-radius: 10px;
         overflow: hidden;
     }
     
-    /* Buton stilleri */
+    
     .stButton>button {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -88,18 +88,18 @@ st.markdown("""
         transform: translateY(-2px);
     }
     
-    /* Info box */
+    
     .stAlert {
         border-radius: 10px;
         border-left: 5px solid #667eea;
     }
     
-    /* Slider */
+    
     .stSlider {
         padding: 10px 0;
     }
     
-    /* File uploader */
+    
     [data-testid="stFileUploader"] {
         border: 2px dashed #667eea;
         border-radius: 10px;
@@ -107,13 +107,13 @@ st.markdown("""
         background: rgba(102, 126, 234, 0.05);
     }
     
-    /* Radio buttons */
+   
     .stRadio > label {
         font-weight: 600;
         color: #34495e;
     }
     
-    /* Divider */
+    
     hr {
         margin: 30px 0;
         border: 1px solid #e0e0e0;
@@ -149,10 +149,10 @@ def load_default_data():
             return None, False
 
 
-# Varsayılan veriyi yükle
+
 df, default_loaded = load_default_data()
 
-# Sidebar'da bilgi
+
 with st.sidebar:
     st.header("Ayarlar")
     
@@ -242,9 +242,9 @@ if df is not None:
         st.dataframe(df.sample(min(rows_to_show, len(df))), use_container_width=True, height=400)
     
     
-    st.header("3. 📊 İstatistiksel Özet")
+    st.header("3. İstatistiksel Özet")
     
-    tab1, tab2 = st.tabs(["📈 Sayısal Özellikler", "📝 Tüm Özellikler"])
+    tab1, tab2 = st.tabs(["Sayısal Özellikler", "Tüm Özellikler"])
     
     with tab1:
         numeric_df = df.select_dtypes(include=['int64', 'float64'])
@@ -254,13 +254,6 @@ if df is not None:
             st.info("Bu veri setinde sayısal sütun bulunmamaktadır.")
     
     with tab2:
-        st.markdown("""
-        <div style='background: #f0f2f6; padding: 15px; border-radius: 10px; margin-bottom: 15px;'>
-            <p style='margin: 0; color: #555;'>
-                📌 <b>Özet İstatistikler:</b> Tüm sütunlar için (sayısal + kategorik)
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
         describe_all = df.describe(include="all")
         st.dataframe(describe_all, use_container_width=True, height=350)
     
@@ -323,9 +316,6 @@ if df is not None:
     
     
     st.markdown("---")
-    st.caption(
-        "Bu uygulama, Veri Bilimi ve Makine Öğrenmesi dersleri için eğitim amaçlı tasarlanmıştır."
-    )
     
    
     numeric_features = df.select_dtypes(include=["int64", "float64"]).columns.tolist()
@@ -333,7 +323,7 @@ if df is not None:
     if len(numeric_features) > 0:
         st.header("6. Sayısal Özellikler ve Korelasyon Analizi")
         
-        with st.expander("🔢 Tespit Edilen Sayısal Özellikler", expanded=False):
+        with st.expander("Tespit Edilen Sayısal Özellikler", expanded=False):
             cols = st.columns(min(len(numeric_features), 4))
             for idx, feature in enumerate(numeric_features):
                 with cols[idx % 4]:
@@ -346,7 +336,7 @@ if df is not None:
                     """, unsafe_allow_html=True)
         
       
-        st.subheader("🔥 Korelasyon Isı Haritası")
+        st.subheader("Korelasyon Isı Haritası")
         
         corr_matrix = df[numeric_features].corr()
         
@@ -376,7 +366,7 @@ if df is not None:
         plt.close()
         
         
-        with st.expander("🔍 En Yüksek Korelasyonlar", expanded=False):
+        with st.expander("En Yüksek Korelasyonlar", expanded=False):
             corr_pairs = corr_matrix.unstack()
             corr_pairs = corr_pairs[corr_pairs < 1.0].abs().sort_values(ascending=False)
             top_corr = corr_pairs.head(10)
@@ -385,25 +375,9 @@ if df is not None:
                 st.markdown(f"**{idx}.** `{pair[0]}` ↔ `{pair[1]}`: **{value:.3f}**")
         
        
-        st.header("7. ⚖️ Sayısal Özelliklerin Standartlaştırılması")
+        st.header("7. Sayısal Özelliklerin Standartlaştırılması")
         
-        st.markdown("""
-        <div style='background: #e8f4f8; padding: 20px; border-radius: 12px; border-left: 5px solid #2196F3;'>
-            <h4 style='color: #1976D2; margin-top: 0;'>🧮 Z-Skoru Normalizasyonu</h4>
-            <p style='color: #555; margin: 10px 0;'>
-                Sayısal özellikler <b>Z-skoru normalizasyonu</b> kullanılarak standartlaştırılmıştır.<br>
-                Bu dönüşüm, her sayısal özelliğin şu özelliklere sahip olmasını sağlar:
-            </p>
-            <ul style='color: #555;'>
-                <li><b>Ortalama</b> ≈ 0</li>
-                <li><b>Standart sapma</b> ≈ 1</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("")
-        
-        
+        # Tespit edilen sayısal özellikleri kullan
         scaler = StandardScaler()
         
         standardized_values = scaler.fit_transform(df[numeric_features])
@@ -441,24 +415,9 @@ if df is not None:
         
      
         if len(numeric_features) >= 2:
-            st.header("8. 🎯 Temel Bileşen Analizi (PCA)")
+            st.header("8. Temel Bileşen Analizi (PCA)")
             
-            st.markdown("""
-            <div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                        padding: 20px; border-radius: 12px; color: white;'>
-                <h4 style='color: white; margin-top: 0;'>🔬 PCA Nedir?</h4>
-                <p style='margin: 10px 0;'>
-                    Temel Bileşen Analizi (PCA), <b>standartlaştırılmış sayısal özelliklere</b> uygulanır
-                    ve boyut azaltma işlemi gerçekleştirilirken mümkün olduğunca çok varyans korunur.
-                </p>
-                <p style='margin: 10px 0 0 0;'>
-                    Burada, veriler <b>iki temel bileşene (PC1 ve PC2)</b> yansıtılmaktadır.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("")
-            
+            # PCA uygula
             pca = PCA(n_components=2)
             pca_components = pca.fit_transform(df_standardized)
             
@@ -496,7 +455,7 @@ if df is not None:
             st.markdown("---")
             
             
-            st.subheader("🟣 PCA Dağılım Grafiği (PC1 vs PC2)")
+            st.subheader("PCA Dağılım Grafiği (PC1 vs PC2)")
             
             fig, ax = plt.subplots(figsize=(10, 7))
             
@@ -527,17 +486,7 @@ if df is not None:
             plt.close()
             
             
-            st.header("9. 📦 Sayısal Özelliklerin Kutu Grafikleri ve Aykırı Değer Analizi")
-            
-            st.markdown("""
-            <div style='background: #fff3cd; padding: 15px; border-radius: 10px; border-left: 5px solid #ffc107;'>
-                <p style='margin: 0; color: #856404;'>
-                    📊 <b>Kutu Grafikleri:</b> Veri dağılımını ve aykırı değerleri (outliers) görselleştirir.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("")
+            st.header("9. Sayısal Özelliklerin Kutu Grafikleri ve Aykırı Değer Analizi")
             
             
             selected_features = st.multiselect(
@@ -589,7 +538,7 @@ if df is not None:
                 plt.close()
                 
                 
-                with st.expander("📊 Aykırı Değer İstatistikleri", expanded=False):
+                with st.expander("Aykırı Değer İstatistikleri", expanded=False):
                     outlier_stats = []
                     for feature in selected_features:
                         Q1 = df[feature].quantile(0.25)
@@ -613,16 +562,6 @@ if df is not None:
             
             if len(numeric_features) <= 6 and len(numeric_features) >= 2:
                 st.header("10. Sayısal Özelliklerin Dağılım Grafikleri (Pair Plot)")
-                
-                st.markdown("""
-                <div style='background: #d1ecf1; padding: 15px; border-radius: 10px; border-left: 5px solid #17a2b8;'>
-                    <p style='margin: 0; color: #0c5460;'>
-                        📈 <b>Pair Plot:</b> Sayısal özellikler arasındaki ilişkileri ve dağılımları görselleştirir.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                st.markdown("")
                 
                 if st.button("🎨 Pair Plot Oluştur", key="pairplot_btn"):
                     with st.spinner('Pair plot oluşturuluyor...'):
