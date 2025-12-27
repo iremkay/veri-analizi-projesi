@@ -144,20 +144,4 @@ Proje, **45 nesli tükenmekte olan hayvan türünü** içeren gerçek verilere d
 
 ---
 
-## 📝 Notlar
 
-- Veri seti otomatik olarak GitHub'dan yüklenir
-- Sidebar'dan farklı veri setleri de yüklenebilir
-- Tüm analizler interaktif ve gerçek zamanlıdır
-
----
-
-## 📧 İletişim
-
-Sorularınız veya geri bildirimleriniz için lütfen iletişime geçin.
-
----
-
-## 📄 Lisans
-
-Bu proje eğitim amaçlı geliştirilmiştir.
