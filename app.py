@@ -122,6 +122,27 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+# ==============================
+# Hayvan Fotoğrafları Galerisi
+# ==============================
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.image("https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=400", 
+             caption="Panda", use_column_width=True)
+
+with col2:
+    st.image("https://images.unsplash.com/photo-1612902377756-414b2139d5e2?w=400", 
+             caption="Kaplan", use_column_width=True)
+
+with col3:
+    st.image("https://images.unsplash.com/photo-1551927336-51d86795837f?w=400", 
+             caption="Gorilla", use_column_width=True)
+
+with col4:
+    st.image("https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=400", 
+             caption="Orangutan", use_column_width=True)
+
 st.title("Nesli Tükenen Hayvanlar Veri Analizi")
 
 st.markdown("""
@@ -161,6 +182,20 @@ with st.sidebar:
         st.caption(f"Toplam {len(df)} Hayvan Türü")
     else:
         st.error("❌ Veri seti yüklenemedi")
+    
+    st.markdown("---")
+    
+    # Sidebar'da hayvan fotoğrafları
+    st.subheader("🐾 Örnek Türler")
+    
+    st.image("https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=300", 
+             caption="Amur Leopard", use_column_width=True)
+    
+    st.image("https://images.unsplash.com/photo-1551316679-9c6ae9dec224?w=300", 
+             caption="Polar Bear", use_column_width=True)
+    
+    st.image("https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=300", 
+             caption="Sumatran Elephant", use_column_width=True)
 
 if df is not None:
     
@@ -203,7 +238,58 @@ if df is not None:
     
     st.markdown("---")
     
-   
+    # ==============================
+    # Pasta Grafikleri (Kategorik Dağılımlar)
+    # ==============================
+    st.header("1.5. Kategorik Veri Dağılımları")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    # Koruma Statüsü Dağılımı
+    with col1:
+        if 'conservation_status' in df.columns:
+            st.subheader("Koruma Statüsü")
+            status_counts = df['conservation_status'].value_counts()
+            
+            fig, ax = plt.subplots(figsize=(8, 8))
+            colors = ['#e74c3c', '#e67e22', '#f39c12']
+            ax.pie(status_counts.values, labels=status_counts.index, autopct='%1.1f%%',
+                   colors=colors, startangle=90, textprops={'fontsize': 10})
+            ax.set_title('Koruma Statüsü Dağılımı', fontsize=12, fontweight='bold', pad=20)
+            st.pyplot(fig)
+            plt.close()
+    
+    # Kıta Dağılımı
+    with col2:
+        if 'continent' in df.columns:
+            st.subheader("Kıta Dağılımı")
+            continent_counts = df['continent'].value_counts()
+            
+            fig, ax = plt.subplots(figsize=(8, 8))
+            colors = plt.cm.Set3(range(len(continent_counts)))
+            ax.pie(continent_counts.values, labels=continent_counts.index, autopct='%1.1f%%',
+                   colors=colors, startangle=90, textprops={'fontsize': 10})
+            ax.set_title('Kıtalara Göre Dağılım', fontsize=12, fontweight='bold', pad=20)
+            st.pyplot(fig)
+            plt.close()
+    
+    # Beslenme Türü Dağılımı
+    with col3:
+        if 'diet_type' in df.columns:
+            st.subheader("Beslenme Türü")
+            diet_counts = df['diet_type'].value_counts()
+            
+            fig, ax = plt.subplots(figsize=(8, 8))
+            colors = ['#3498db', '#2ecc71', '#9b59b6']
+            ax.pie(diet_counts.values, labels=diet_counts.index, autopct='%1.1f%%',
+                   colors=colors, startangle=90, textprops={'fontsize': 10})
+            ax.set_title('Beslenme Türü Dağılımı', fontsize=12, fontweight='bold', pad=20)
+            st.pyplot(fig)
+            plt.close()
+    
+    st.markdown("---")
+    
+    # Sütun İsimleri ve Tipleri
     with st.expander("📝 Sütun İsimleri ve Tipleri"):
         col_info = pd.DataFrame({
             'Sütun Adı': df.columns,
@@ -377,7 +463,7 @@ if df is not None:
        
         st.header("7. Sayısal Özelliklerin Standartlaştırılması")
         
-        # Tespit edilen sayısal özellikleri kullan
+       
         scaler = StandardScaler()
         
         standardized_values = scaler.fit_transform(df[numeric_features])
@@ -417,7 +503,7 @@ if df is not None:
         if len(numeric_features) >= 2:
             st.header("8. Temel Bileşen Analizi (PCA)")
             
-            # PCA uygula
+            
             pca = PCA(n_components=2)
             pca_components = pca.fit_transform(df_standardized)
             
@@ -588,9 +674,7 @@ if df is not None:
     else:
         st.warning("⚠️ Veri setinde sayısal özellik bulunamadı!")
     
-    # ==============================
-    # Footer
-    # ==============================
+    
     st.markdown("---")
     st.markdown("""
     <div style='text-align: center; padding: 30px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
